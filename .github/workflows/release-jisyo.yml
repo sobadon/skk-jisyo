@@ -1,0 +1,62 @@
+name: release-jisyo
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "csv/**"
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.15
+        id: go
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: cache
+        uses: actions/cache@v2.1.0
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+  release:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        run: go build -o syosyo
+      - name: Generate jisyo file from csv
+        run: |
+          csv_list=`find csv -type f`
+          format_list="skk contacts"
+          for format in ${format_list} ; do for csv in ${csv_list} ; do ./syosyo --format ${format} `basename ${csv} .csv` ; done ; done
+      - name: Create release
+        uses: actions/create-release@v1.0.0
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+          body: |
+            Commit: ${{ github.sha }}
+      - name: Upload jisyo (skk)
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "skk/**"
+      - name: Upload jisyo (Google Contacts)
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "contacts/**"
