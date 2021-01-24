@@ -15,7 +15,7 @@ func Test_convertCsvToSkk(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "yomi: 1",
+			name: "yomi: 1, word: 1",
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
@@ -31,7 +31,7 @@ func Test_convertCsvToSkk(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "yomi: 2",
+			name: "yomi: 2, word: 1",
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
@@ -44,6 +44,42 @@ func Test_convertCsvToSkk(t *testing.T) {
 			want: `;; okuri-nasi entries.
 きゃっち /Catch the Rainbow！;作詞：水瀬いのり　作曲：光増ハジメ　編曲：EFFY/
 ctr /Catch the Rainbow！;作詞：水瀬いのり　作曲：光増ハジメ　編曲：EFFY/
+`,
+			wantErr: false,
+		},
+		{
+			name: "yomi: 1, word: 2",
+			args: args{
+				jisyoRows: []*JisyoCSV{
+					{
+						Yomi: "しゃこう",
+						Word: "社会工学類,社工",
+						Note: "",
+					},
+				},
+			},
+			want: `;; okuri-nasi entries.
+しゃこう /社会工学類;/
+しゃこう /社工;/
+`,
+			wantErr: false,
+		},
+		{
+			name: "yomi: 2, word: 2",
+			args: args{
+				jisyoRows: []*JisyoCSV{
+					{
+						Yomi: "こうしす,esys",
+						Word: "工学システム学類,工シス",
+						Note: "esys（いーしす：Engineering System）",
+					},
+				},
+			},
+			want: `;; okuri-nasi entries.
+こうしす /工学システム学類;esys（いーしす：Engineering System）/
+こうしす /工シス;esys（いーしす：Engineering System）/
+esys /工学システム学類;esys（いーしす：Engineering System）/
+esys /工シス;esys（いーしす：Engineering System）/
 `,
 			wantErr: false,
 		},
@@ -74,7 +110,7 @@ func Test_convertCsvToGoogleContacts(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "yomi: 1",
+			name: "yomi: 1, word: 1",
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
@@ -91,7 +127,7 @@ func Test_convertCsvToGoogleContacts(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "yomi: 2",
+			name: "yomi: 2, word: 1",
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
@@ -105,6 +141,44 @@ func Test_convertCsvToGoogleContacts(t *testing.T) {
 			want: `Given Name,Family Name,Given Name Yomi,Group Membership
 Catch the Rainbow！,_,きゃっち,inoriminase ::: * myContacts
 Catch the Rainbow！,_,ctr,inoriminase ::: * myContacts
+`,
+			wantErr: false,
+		},
+		{
+			name: "yomi: 1, word: 2",
+			args: args{
+				jisyoRows: []*JisyoCSV{
+					{
+						Yomi: "しゃこう",
+						Word: "社会工学類,社工",
+						Note: "",
+					},
+				},
+				name: "itf",
+			},
+			want: `Given Name,Family Name,Given Name Yomi,Group Membership
+社会工学類,_,しゃこう,itf ::: * myContacts
+社工,_,しゃこう,itf ::: * myContacts
+`,
+			wantErr: false,
+		},
+		{
+			name: "yomi: 2, word: 2",
+			args: args{
+				jisyoRows: []*JisyoCSV{
+					{
+						Yomi: "こうしす,esys",
+						Word: "工学システム学類,工シス",
+						Note: "esys（いーしす：Engineering System）",
+					},
+				},
+				name: "itf",
+			},
+			want: `Given Name,Family Name,Given Name Yomi,Group Membership
+工学システム学類,_,こうしす,itf ::: * myContacts
+工シス,_,こうしす,itf ::: * myContacts
+工学システム学類,_,esys,itf ::: * myContacts
+工シス,_,esys,itf ::: * myContacts
 `,
 			wantErr: false,
 		},

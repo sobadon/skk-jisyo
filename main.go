@@ -137,21 +137,24 @@ func convertCsvToSkk(jisyoRows []*JisyoCSV) (string, error) {
 		// 雑に split
 		yo := strings.Split(row.Yomi, ",")
 		for _, y := range yo {
-			t, err := template.New("SKKJisyo").Parse(skkJisyoTmpl)
-			if err != nil {
-				return "", fmt.Errorf("%w", err)
+			wo := strings.Split(row.Word, ",")
+			for _, w := range wo {
+				t, err := template.New("SKKJisyo").Parse(skkJisyoTmpl)
+				if err != nil {
+					return "", fmt.Errorf("%w", err)
+				}
+				data := map[string]interface{}{
+					"yomi": y,
+					"word": w,
+					"note": row.Note,
+				}
+				var buf bytes.Buffer
+				err = t.Execute(&buf, data)
+				if err != nil {
+					return "", fmt.Errorf("%w", err)
+				}
+				skkJisyoAll += buf.String()
 			}
-			data := map[string]interface{}{
-				"yomi": y,
-				"word": row.Word,
-				"note": row.Note,
-			}
-			var buf bytes.Buffer
-			err = t.Execute(&buf, data)
-			if err != nil {
-				return "", fmt.Errorf("%w", err)
-			}
-			skkJisyoAll += buf.String()
 		}
 	}
 	return skkJisyoAll, nil
@@ -163,13 +166,16 @@ func convertCsvToGoogleContacts(jisyoRows []*JisyoCSV, name string) (string, err
 		// 雑に split
 		yo := strings.Split(row.Yomi, ",")
 		for _, y := range yo {
-			row := GoogleContactsCSV{
-				GivenName:       row.Word,
-				FamilyName:      "_",
-				GivenNameYomi:   y,
-				GroupMembership: name + " ::: * myContacts",
+			wo := strings.Split(row.Word, ",")
+			for _, w := range wo {
+				row := GoogleContactsCSV{
+					GivenName:       w,
+					FamilyName:      "_",
+					GivenNameYomi:   y,
+					GroupMembership: name + " ::: * myContacts",
+				}
+				rows = append(rows, row)
 			}
-			rows = append(rows, row)
 		}
 	}
 	csv, err := gocsv.MarshalString(rows)
