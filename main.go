@@ -109,7 +109,7 @@ func generateJisyo(c *cli.Context) error {
 
 func export(baseDir, fileName, all string) error {
 	checkBaseDir(baseDir)
-	err := ioutil.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0600)
+	err := ioutil.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0644)
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}
