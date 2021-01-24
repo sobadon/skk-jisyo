@@ -19,9 +19,9 @@ func Test_convertCsvToSkk(t *testing.T) {
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
-						WordsBefore: "やくそくの",
-						WordAfter:   "約束のアステリズム",
-						Note:        "作詞・作曲・編曲：藤永龍太郎(Elements Garden)",
+						Yomi: "やくそくの",
+						Word: "約束のアステリズム",
+						Note: "作詞・作曲・編曲：藤永龍太郎(Elements Garden)",
 					},
 				},
 			},
@@ -35,9 +35,9 @@ func Test_convertCsvToSkk(t *testing.T) {
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
-						WordsBefore: "きゃっち,ctr",
-						WordAfter:   "Catch the Rainbow！",
-						Note:        "作詞：水瀬いのり　作曲：光増ハジメ　編曲：EFFY",
+						Yomi: "きゃっち,ctr",
+						Word: "Catch the Rainbow！",
+						Note: "作詞：水瀬いのり　作曲：光増ハジメ　編曲：EFFY",
 					},
 				},
 			},
@@ -78,9 +78,9 @@ func Test_convertCsvToGoogleContacts(t *testing.T) {
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
-						WordsBefore: "やくそくの",
-						WordAfter:   "約束のアステリズム",
-						Note:        "作詞・作曲・編曲：藤永龍太郎(Elements Garden)",
+						Yomi: "やくそくの",
+						Word: "約束のアステリズム",
+						Note: "作詞・作曲・編曲：藤永龍太郎(Elements Garden)",
 					},
 				},
 				name: "inoriminase",
@@ -95,9 +95,9 @@ func Test_convertCsvToGoogleContacts(t *testing.T) {
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
-						WordsBefore: "きゃっち,ctr",
-						WordAfter:   "Catch the Rainbow！",
-						Note:        "作詞：水瀬いのり　作曲：光増ハジメ　編曲：EFFY",
+						Yomi: "きゃっち,ctr",
+						Word: "Catch the Rainbow！",
+						Note: "作詞：水瀬いのり　作曲：光増ハジメ　編曲：EFFY",
 					},
 				},
 				name: "inoriminase",
