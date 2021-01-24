@@ -25,11 +25,11 @@ jobs:
           format_list="skk contacts"
           for format in ${format_list} ; do for csv in ${csv_list} ; do ./syosyo --format ${format} `basename ${csv} .csv` ; done ; done
       - name: Get current time
-          uses: 1466587594/get-current-time@v2
-          id: current-time
-          with:
-            format: YYYYMMDD-HHmmss
-            utcOffset: "+09:00"
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD-HHmmss
+          utcOffset: "+09:00"
       - name: Create release
         uses: actions/create-release@v1.0.0
         id: create_release
