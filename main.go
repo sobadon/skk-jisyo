@@ -108,18 +108,26 @@ func generateJisyo(c *cli.Context) error {
 }
 
 func export(baseDir, fileName, all string) error {
-	checkBaseDir(baseDir)
-	err := ioutil.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0644)
+	err := checkBaseDir(baseDir)
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0644)
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}
 	return nil
 }
 
-func checkBaseDir(baseDir string) {
+func checkBaseDir(baseDir string) error {
 	if _, err := os.Stat(baseDir); os.IsNotExist(err) {
-		os.Mkdir(baseDir, 0755)
+		err := os.Mkdir(baseDir, 0755)
+		if err != nil {
+			return fmt.Errorf("%w", err)
+		}
+		return nil
 	}
+	return nil
 }
 
 func convertCsvToSkk(jisyoRows []*JisyoCSV) (string, error) {
