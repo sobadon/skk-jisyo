@@ -131,7 +131,7 @@ func checkBaseDir(baseDir string) error {
 }
 
 func convertCsvToSkk(jisyoRows []*JisyoCSV) (string, error) {
-	skkJisyoTmpl := "{{.yomi}} /{{.word}};{{.note}}/\n"
+	skkJisyoTmpl := "{{.yomi}} /{{.word}}{{ if .note }};{{ end }}{{.note}}/\n"
 	skkJisyoAll := ";; okuri-nasi entries.\n"
 	for _, row := range jisyoRows {
 		// 雑に split

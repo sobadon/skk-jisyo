@@ -15,7 +15,23 @@ func Test_convertCsvToSkk(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "yomi: 1, word: 1",
+			name: "note: false",
+			args: args{
+				jisyoRows: []*JisyoCSV{
+					{
+						Yomi: "やくそくの",
+						Word: "約束のアステリズム",
+						Note: "",
+					},
+				},
+			},
+			want: `;; okuri-nasi entries.
+やくそくの /約束のアステリズム/
+`,
+			wantErr: false,
+		},
+		{
+			name: "yomi: 1, word: 1, note: true",
 			args: args{
 				jisyoRows: []*JisyoCSV{
 					{
@@ -59,8 +75,8 @@ ctr /Catch the Rainbow！;作詞：水瀬いのり　作曲：光増ハジメ　
 				},
 			},
 			want: `;; okuri-nasi entries.
-しゃこう /社会工学類;/
-しゃこう /社工;/
+しゃこう /社会工学類/
+しゃこう /社工/
 `,
 			wantErr: false,
 		},
