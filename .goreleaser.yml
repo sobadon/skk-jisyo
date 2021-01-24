@@ -1,4 +1,4 @@
-project_name: skk-jisyo
+project_name: syosyo
 env:
   - GO111MODULE=on
 builds:
