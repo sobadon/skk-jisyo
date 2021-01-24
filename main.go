@@ -118,7 +118,7 @@ func export(baseDir, fileName, all string) error {
 
 func checkBaseDir(baseDir string) {
 	if _, err := os.Stat(baseDir); os.IsNotExist(err) {
-		os.Mkdir(baseDir, 0600)
+		os.Mkdir(baseDir, 0755)
 	}
 }
 
