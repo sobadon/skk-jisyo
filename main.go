@@ -131,30 +131,27 @@ func checkBaseDir(baseDir string) error {
 }
 
 func convertCsvToSkk(jisyoRows []*JisyoCSV) (string, error) {
-	skkJisyoTmpl := "{{.yomi}} /{{.word}}{{ if .note }};{{ end }}{{.note}}/\n"
+	skkJisyoTmpl := "{{ .yomi }} /{{ range .word }}{{ . }}{{ with $.note }};{{ $.note }}{{ end }}/{{ end }}\n"
 	skkJisyoAll := ";; okuri-nasi entries.\n"
 	for _, row := range jisyoRows {
 		// 雑に split
 		yo := strings.Split(row.Yomi, ",")
 		for _, y := range yo {
-			wo := strings.Split(row.Word, ",")
-			for _, w := range wo {
-				t, err := template.New("SKKJisyo").Parse(skkJisyoTmpl)
-				if err != nil {
-					return "", fmt.Errorf("%w", err)
-				}
-				data := map[string]interface{}{
-					"yomi": y,
-					"word": w,
-					"note": row.Note,
-				}
-				var buf bytes.Buffer
-				err = t.Execute(&buf, data)
-				if err != nil {
-					return "", fmt.Errorf("%w", err)
-				}
-				skkJisyoAll += buf.String()
+			t, err := template.New("SKKJisyo").Parse(skkJisyoTmpl)
+			if err != nil {
+				return "", fmt.Errorf("%w", err)
 			}
+			data := map[string]interface{}{
+				"yomi": y,
+				"word": strings.Split(row.Word, ","),
+				"note": row.Note,
+			}
+			var buf bytes.Buffer
+			err = t.Execute(&buf, data)
+			if err != nil {
+				return "", fmt.Errorf("%w", err)
+			}
+			skkJisyoAll += buf.String()
 		}
 	}
 	return skkJisyoAll, nil
