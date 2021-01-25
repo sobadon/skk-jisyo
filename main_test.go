@@ -75,8 +75,7 @@ ctr /Catch the Rainbow！;作詞：水瀬いのり　作曲：光増ハジメ　
 				},
 			},
 			want: `;; okuri-nasi entries.
-しゃこう /社会工学類/
-しゃこう /社工/
+しゃこう /社会工学類/社工/
 `,
 			wantErr: false,
 		},
@@ -92,10 +91,8 @@ ctr /Catch the Rainbow！;作詞：水瀬いのり　作曲：光増ハジメ　
 				},
 			},
 			want: `;; okuri-nasi entries.
-こうしす /工学システム学類;esys（いーしす：Engineering System）/
-こうしす /工シス;esys（いーしす：Engineering System）/
-esys /工学システム学類;esys（いーしす：Engineering System）/
-esys /工シス;esys（いーしす：Engineering System）/
+こうしす /工学システム学類;esys（いーしす：Engineering System）/工シス;esys（いーしす：Engineering System）/
+esys /工学システム学類;esys（いーしす：Engineering System）/工シス;esys（いーしす：Engineering System）/
 `,
 			wantErr: false,
 		},
