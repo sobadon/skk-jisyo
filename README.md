@@ -8,7 +8,7 @@ SKK 日本語入力 FEP で利用可能な辞書ファイルを作成します�
 
 ## SKK
 
-私が雑に作成した辞書たち
+雑に作成した辞書たち
 
 - [SKK-JISYO-inoriminase.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-inoriminase.txt)
     - 水瀬いのりに関するキーワードや楽曲をまとめたもの
