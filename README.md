@@ -6,6 +6,10 @@
 
 - [SKK-JISYO-inoriminase.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-inoriminase.txt)
     - 水瀬いのりに関するキーワードや楽曲をまとめたもの
+- [SKK-JISYO-say-you.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-say-you.txt)
+    - 独断と偏見で声優関連をまとめたもの
+- [SKK-JISYO-itf.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-itf.txt)
+    - あいてぃーえふーのあれこれをまとめたもの
 
 ## Google Contacts
 
