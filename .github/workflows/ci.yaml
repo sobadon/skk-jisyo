@@ -9,46 +9,32 @@ on:
       - ".github/workflows/**"
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: setup
-        uses: actions/setup-go@v1
-        with:
-          go-version: 1.15
-        id: go
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: cache
-        uses: actions/cache@v2.1.0
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
   lint:
-    needs: setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
-          version: latest
+          version: v1.44.0
 
+  # 必要ない？
   build:
-    needs: setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
       - name: build
         run: go build -o syosyo
 
   test:
-    needs: setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
       - name: test
         run: go test -v
