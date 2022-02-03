@@ -2,13 +2,14 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/pkg/errors"
 
 	"github.com/gocarina/gocsv"
 	"github.com/urfave/cli/v2"
@@ -44,7 +45,7 @@ func main() {
 	}
 	err := app.Run(os.Args)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("%+v", err)
 	}
 }
 
@@ -57,7 +58,7 @@ func generateJisyo(c *cli.Context) error {
 		jisyoName = jisyoNameEnv
 	} else {
 		if len(args) == 0 {
-			return fmt.Errorf("no jisyo name")
+			return errors.New("no jisyo name")
 		}
 		jisyoName = args[0]
 	}
@@ -65,14 +66,14 @@ func generateJisyo(c *cli.Context) error {
 
 	f, err := os.OpenFile(filepath.Join("csv", jisyoCSVFileName), os.O_RDWR|os.O_CREATE, os.ModePerm)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return errors.WithStack(err)
 	}
 	defer f.Close()
 
 	jisyoRows := []*JisyoCSV{}
 	err = gocsv.UnmarshalFile(f, &jisyoRows)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return errors.WithStack(err)
 	}
 
 	switch c.String("format") {
@@ -80,12 +81,12 @@ func generateJisyo(c *cli.Context) error {
 		// output: SKK-JISYO-<SYOSYO_JISYO_NAME>.txt
 		jisyoAll, err := convertCsvToSkk(jisyoRows)
 		if err != nil {
-			return fmt.Errorf("%w", err)
+			return err
 		}
 		fileName := "SKK-JISYO-" + jisyoName + ".txt"
 		err = export("skk", fileName, jisyoAll)
 		if err != nil {
-			return fmt.Errorf("%w", err)
+			return err
 		}
 		log.Printf("Done: %s => %s", jisyoCSVFileName, fileName)
 		return nil
@@ -93,12 +94,12 @@ func generateJisyo(c *cli.Context) error {
 		// output: GContacts-JISYO-<SYOSYO_JISYO_NAME>.csv
 		jisyoAll, err := convertCsvToGoogleContacts(jisyoRows, jisyoName)
 		if err != nil {
-			return fmt.Errorf("%w", err)
+			return err
 		}
 		fileName := "GContacts-JISYO-" + jisyoName + ".csv"
 		err = export("contacts", fileName, jisyoAll)
 		if err != nil {
-			return fmt.Errorf("%w", err)
+			return err
 		}
 		log.Printf("Done: %s => %s", jisyoCSVFileName, fileName)
 		return nil
@@ -110,11 +111,11 @@ func generateJisyo(c *cli.Context) error {
 func export(baseDir, fileName, all string) error {
 	err := checkBaseDir(baseDir)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return err
 	}
 	err = ioutil.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0644)
 	if err != nil {
-		return fmt.Errorf("%w", err)
+		return errors.WithStack(err)
 	}
 	return nil
 }
@@ -123,7 +124,7 @@ func checkBaseDir(baseDir string) error {
 	if _, err := os.Stat(baseDir); os.IsNotExist(err) {
 		err := os.Mkdir(baseDir, 0755)
 		if err != nil {
-			return fmt.Errorf("%w", err)
+			return errors.WithStack(err)
 		}
 		return nil
 	}
@@ -139,7 +140,7 @@ func convertCsvToSkk(jisyoRows []*JisyoCSV) (string, error) {
 		for _, y := range yo {
 			t, err := template.New("SKKJisyo").Parse(skkJisyoTmpl)
 			if err != nil {
-				return "", fmt.Errorf("%w", err)
+				return "", errors.WithStack(err)
 			}
 			data := map[string]interface{}{
 				"yomi": y,
@@ -149,7 +150,7 @@ func convertCsvToSkk(jisyoRows []*JisyoCSV) (string, error) {
 			var buf bytes.Buffer
 			err = t.Execute(&buf, data)
 			if err != nil {
-				return "", fmt.Errorf("%w", err)
+				return "", errors.WithStack(err)
 			}
 			skkJisyoAll += buf.String()
 		}
@@ -177,7 +178,7 @@ func convertCsvToGoogleContacts(jisyoRows []*JisyoCSV, name string) (string, err
 	}
 	csv, err := gocsv.MarshalString(rows)
 	if err != nil {
-		return "", fmt.Errorf("%w", err)
+		return "", errors.WithStack(err)
 	}
 	return csv, nil
 }
