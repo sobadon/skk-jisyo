@@ -1,12 +1,12 @@
 name: release-jisyo
 
-on:
-  push:
-    branches:
-      - master
-    paths:
-      - ".github/workflows/**"
-      - "csv/**"
+# on:
+#   push:
+#     branches:
+#       - master
+#     paths:
+#       - ".github/workflows/**"
+#       - "csv/**"
 
 jobs:
   release:
