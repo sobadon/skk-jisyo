@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -113,7 +112,7 @@ func export(baseDir, fileName, all string) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0644)
+	err = os.WriteFile(filepath.Join(baseDir, fileName), []byte(all), 0644)
 	if err != nil {
 		return errors.WithStack(err)
 	}
