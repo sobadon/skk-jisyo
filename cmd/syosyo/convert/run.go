@@ -1,17 +1,16 @@
-package main
+package convert
 
 import (
 	"bytes"
-	"html/template"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/pkg/errors"
+	"text/template"
 
 	"github.com/gocarina/gocsv"
-	"github.com/urfave/cli/v2"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 )
 
 type JisyoCSV struct {
@@ -27,30 +26,30 @@ type GoogleContactsCSV struct {
 	GroupMembership string `csv:"Group Membership"`
 }
 
-func main() {
-	app := &cli.App{
-		Name:    "syosyo",
-		Usage:   "generate jisyo file",
-		Version: "0.1.0",
-		Flags: []cli.Flag{
-			&cli.StringFlag{
-				Name:    "format",
-				Value:   "skk",
-				Usage:   "jisyo file format (\"skk\", \"contacts\")",
-				EnvVars: []string{"SYOSYO_FORMAT"},
-			},
-		},
-		Action: generateJisyo,
+func RootCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "convert JISYO_NAME",
+		Short: "generate jisyo file",
+		Long: `
+$ ./syosyo convert inoriminase
+2023/09/17 16:11:42 Done: inoriminase.csv => SKK-JISYO-inoriminase.txt
+`,
+		RunE: run,
 	}
-	err := app.Run(os.Args)
-	if err != nil {
-		log.Fatalf("%+v", err)
-	}
+
+	cmd.Flags().String("format", "skk", "jisyo file format (skk, contacts)")
+
+	return cmd
 }
 
-func generateJisyo(c *cli.Context) error {
+func run(cmd *cobra.Command, args []string) error {
 	// input: <SYOSYO_JISYO_NAME>.csv
-	args := c.Args().Slice()
+
+	format, err := cmd.Flags().GetString("format")
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
 	var jisyoName string
 	jisyoNameEnv := os.Getenv("SYOSYO_JISYO_NAME")
 	if jisyoNameEnv != "" {
@@ -75,7 +74,7 @@ func generateJisyo(c *cli.Context) error {
 		return errors.WithStack(err)
 	}
 
-	switch c.String("format") {
+	switch format {
 	case "skk":
 		// output: SKK-JISYO-<SYOSYO_JISYO_NAME>.txt
 		jisyoAll, err := convertCsvToSkk(jisyoRows)
