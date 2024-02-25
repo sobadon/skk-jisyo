@@ -119,7 +119,7 @@ func run(*cobra.Command, []string) error {
 		jisyoRows = append(jisyoRows, &JisyoCSV{
 			Yomi: strings.Join([]string{sei, mei}, ","),
 			Word: member.Name,
-			Note: strings.Join([]string{member.Cate, member.Birthday}, " "),
+			Note: strings.Join([]string{member.Cate, strings.ReplaceAll(member.Birthday, `/`, `-`)}, " "),
 		})
 	}
 
