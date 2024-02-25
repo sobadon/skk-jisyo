@@ -1,7 +1,7 @@
 .PHONY: ci-upload
 ci-upload:
-	aws --profile object-storage1-chasoba-net s3 cp --recursive ./contacts/ s3://skk-jisyo-chasoba-net/latest/contacts
-	aws --profile object-storage1-chasoba-net s3 cp --recursive ./skk/ s3://skk-jisyo-chasoba-net/latest/skk
+	aws s3 cp --recursive ./contacts/ s3://skk-jisyo-chasoba-net/latest/contacts
+	aws s3 cp --recursive ./skk/ s3://skk-jisyo-chasoba-net/latest/skk
 
 .PHONY: syosyo
 syosyo:

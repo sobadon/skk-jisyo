@@ -12,16 +12,6 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup aws cli
-        run: |
-          mkdir -p ~/.aws
-          tee ~/.aws/config <<EOF >/dev/null
-          [profile object-storage1-chasoba-net]
-          region = fake
-          ignore_configure_endpoint_urls = true
-          endpoint_url = https://object-storage1.chasoba.net
-          EOF
-
       - uses: actions/checkout@v2
       - name: setup
         uses: actions/setup-go@v4
@@ -31,5 +21,8 @@ jobs:
       - run: make generate-jisyo
       - run: make ci-upload
         env:
+          AWS_DEFAULT_REGION: fake
+          AWS_EC2_METADATA_DISABLED: true
+          AWS_ENDPOINT_URL: https://object-storage1.chasoba.net
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
