@@ -5,23 +5,19 @@ SKK 日本語入力 FEP で利用可能な辞書ファイルを作成する。�
 
 ## SKK
 
-```
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-inoriminase.txt
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-itf.txt
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-nogizaka46-member.txt
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-say-you.txt
-```
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-inoriminase.txt
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-itf.txt
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-nogizaka46-member.txt
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-say-you.txt
 
 ## Google Contacts
 
 iOS などのため。
 
-```
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-inoriminase.csv
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-itf.csv
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-nogizaka46-member.csv
-https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-say-you.csv
-```
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-inoriminase.csv
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-itf.csv
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-nogizaka46-member.csv
+- https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-say-you.csv
 
 ---
 
