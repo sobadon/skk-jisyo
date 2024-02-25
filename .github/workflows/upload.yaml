@@ -1,0 +1,34 @@
+name: upload
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/**"
+      - "csv/**"
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup aws cli
+        run: |
+          tee ~/.aws/config <<EOF >/dev/null
+[profile object-storage1-chasoba-net]
+region = fake
+ignore_configure_endpoint_urls = true
+endpoint_url = https://object-storage1.chasoba.net
+EOF
+
+      - name: setup
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
+      - uses: actions/checkout@v2
+      - run: make syosyo
+      - run: make generate-jisyo
+      - run: make ci-upload
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
