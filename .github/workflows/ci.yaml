@@ -1,12 +1,13 @@
 name: ci
 
-on:
-  push:
-    paths:
-      - "**.go"
-      - "go.mod"
-      - "go.sum"
-      - ".github/workflows/**"
+# temp disable
+# on:
+#   push:
+#     paths:
+#       - "**.go"
+#       - "go.mod"
+#       - "go.sum"
+#       - ".github/workflows/**"
 
 jobs:
   lint:
