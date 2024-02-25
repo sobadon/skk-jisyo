@@ -1,7 +1,10 @@
 name: ci
 
 # temp disable
-# on:
+on:
+  push:
+    branches:
+      - __dummy
 #   push:
 #     paths:
 #       - "**.go"
