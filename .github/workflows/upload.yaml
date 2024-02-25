@@ -15,11 +15,11 @@ jobs:
       - name: Setup aws cli
         run: |
           tee ~/.aws/config <<EOF >/dev/null
-[profile object-storage1-chasoba-net]
-region = fake
-ignore_configure_endpoint_urls = true
-endpoint_url = https://object-storage1.chasoba.net
-EOF
+          [profile object-storage1-chasoba-net]
+          region = fake
+          ignore_configure_endpoint_urls = true
+          endpoint_url = https://object-storage1.chasoba.net
+          EOF
 
       - name: setup
         uses: actions/setup-go@v2
