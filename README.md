@@ -1,35 +1,26 @@
 # skk-jisyo
 
-ざっくり：
 変な CSV ファイルから SKK で使えるような辞書を「雑に」出力してくれる子。skk-jisyo と名乗りつつも、Google Contacts 形式にも出力してくれる。
-
-くわしく：
-SKK 日本語入力 FEP で利用可能な辞書ファイルを作成します。他のソフトウェアまわりは考慮していません。雑にということで、本来必要である（？）辞書のソートをしていません。
+SKK 日本語入力 FEP で利用可能な辞書ファイルを作成する。他のソフトウェアまわりは考慮されていない。雑にということで、本来必要である（？）辞書のソートをしていない。
 
 ## SKK
 
-雑に作成した辞書たち
-
-- [SKK-JISYO-inoriminase.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-inoriminase.txt)
-    - 水瀬いのりに関するキーワードや楽曲をまとめたもの
-- [SKK-JISYO-say-you.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-say-you.txt)
-    - 独断と偏見で声優関連をまとめたもの
-- [SKK-JISYO-itf.txt](https://github.com/sobadon/skk-jisyo/releases/latest/download/SKK-JISYO-itf.txt)
-    - あいてぃーえふーのあれこれをまとめたもの
+```
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-inoriminase.txt
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-itf.txt
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-nogizaka46-member.txt
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/skk/SKK-JISYO-say-you.txt
+```
 
 ## Google Contacts
 
-SKK 向けの辞書だけでは、スマホなどで不便になるので、いい感じに iOS, iPadOS 端末でも補完できるように、 Google Contacts でインポートできる CSV ファイルでも出力してある（Release を参照）。
+iOS などのため。
 
----
-
-## 手元で作成する
-
-カレントの `csv` ディレクトリにそれっぽい csv ファイルがあるとしてする。
-
-`inoriminase.csv` を元に SKK 向け辞書ファイルを作成する。実行すると、カレントの `skk` ディレクトリにそれっぽい辞書ファイルができる。
 ```
-syosyo --format skk inoriminase
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-inoriminase.csv
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-itf.csv
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-nogizaka46-member.csv
+https://object-storage1.chasoba.net/skk-jisyo-chasoba-net/latest/contacts/GContacts-JISYO-say-you.csv
 ```
 
 ---
