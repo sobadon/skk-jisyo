@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: Setup aws cli
         run: |
+          mkdir -p ~/.aws
           tee ~/.aws/config <<EOF >/dev/null
           [profile object-storage1-chasoba-net]
           region = fake
