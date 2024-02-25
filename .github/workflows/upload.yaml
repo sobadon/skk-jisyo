@@ -22,11 +22,11 @@ jobs:
           endpoint_url = https://object-storage1.chasoba.net
           EOF
 
+      - uses: actions/checkout@v2
       - name: setup
         uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
-      - uses: actions/checkout@v2
       - run: make syosyo
       - run: make generate-jisyo
       - run: make ci-upload
