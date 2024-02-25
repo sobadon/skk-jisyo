@@ -23,9 +23,9 @@ jobs:
           EOF
 
       - name: setup
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v4
         with:
-          go-version: 1.15
+          go-version-file: go.mod
       - uses: actions/checkout@v2
       - run: make syosyo
       - run: make generate-jisyo
